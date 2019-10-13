@@ -7,8 +7,20 @@ import { Provider } from "react-redux";
 import { Route, Switch } from "react-router";
 import { ConnectedRouter } from "connected-react-router";
 import store, { history } from "./store";
+import { connect } from 'react-redux';
+import players from './data/players';
+import stats from './data/stats';
+import games from './data/games';
+import tables from './data/tables';
+import { initializeData } from "./application/actions";
 
-class Application extends PureComponent {
+class _Application extends PureComponent {
+
+  componentDidMount() {
+    let { dispatch } = this.props;
+    dispatch(initializeData({ games, players, stats, tables }));
+  }
+
   render() {
     return (
       <div className="container">
@@ -18,6 +30,9 @@ class Application extends PureComponent {
     );
   }
 }
+
+const Application = connect(null)(_Application);
+
 
 ReactDOM.render(
   <Provider store={store}>
