@@ -7,19 +7,13 @@ import { Provider } from "react-redux";
 import { Route, Switch } from "react-router";
 import { ConnectedRouter } from "connected-react-router";
 import store, { history } from "./store";
-import { connect } from 'react-redux';
-import players from './data/players';
-import stats from './data/stats';
-import games from './data/games';
-import tables from './data/tables';
+import players from "./data/players";
 import { initializeData } from "./application/actions";
+import Season from "./controllers/seasons";
+import { connect } from "react-redux";
 
 class _Application extends PureComponent {
-
-  componentDidMount() {
-    let { dispatch } = this.props;
-    dispatch(initializeData({ games, players, stats, tables }));
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -33,12 +27,12 @@ class _Application extends PureComponent {
 
 const Application = connect(null)(_Application);
 
-
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Application>
         <Switch>
+          <Route path="/season/:id" component={Season} />
           <Route exact path="/" render={() => <div>root</div>} />
         </Switch>
       </Application>
